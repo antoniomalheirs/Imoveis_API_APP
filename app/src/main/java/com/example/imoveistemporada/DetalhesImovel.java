@@ -24,10 +24,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class DetalhesImovel extends AppCompatActivity {
 
     private DatabaseReference imoveisRef = FirebaseDatabase.getInstance().getReference("Imoveis");
@@ -56,7 +52,7 @@ public class DetalhesImovel extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String imovelId = intent.getStringExtra("imovel_id");
-            fetchImovelDetails(imovelId);
+            obterDetalhesImovel(imovelId);
         }
 
         volta.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +64,7 @@ public class DetalhesImovel extends AppCompatActivity {
         });
     }
 
+    // Inicializa os elementos visuais
     private void initializeViews() {
         textViewTituloDetalhes = findViewById(R.id.textViewTituloDetalhes);
         textViewIdImovel = findViewById(R.id.textViewIdImovel);
@@ -82,25 +79,27 @@ public class DetalhesImovel extends AppCompatActivity {
         volta = findViewById(R.id.button);
     }
 
-    private void fetchImovelDetails(String imovelId) {
+    // Obtém os detalhes do imóvel a partir do ID
+    private void obterDetalhesImovel(String imovelId) {
         imoveisRef.child(imovelId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Imovel imovel = dataSnapshot.getValue(Imovel.class);
                 if (imovel != null) {
-                    updateTextViews(imovel);
-                    fetchAndDisplayWeatherData(imovel.getCidade());
+                    atualizarTextViews(imovel);
+                    buscarEExibirDadosClima(imovel.getCidade());
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle database read error
+                // Trata erro na leitura do banco de dados
             }
         });
     }
 
-    private void updateTextViews(Imovel imovel) {
+    // Atualiza os elementos visuais com os detalhes do imóvel
+    private void atualizarTextViews(Imovel imovel) {
         textViewTituloDetalhes.setText("Detalhes do Imóvel");
         textViewIdImovel.setText("ID do Imóvel: " + imovel.getIdImovel());
         textViewNomeProprietario.setText("Nome do Proprietário: " + imovel.getNomeProprietario());
@@ -112,7 +111,8 @@ public class DetalhesImovel extends AppCompatActivity {
         textViewUid.setText("UID do Proprietário: " + imovel.getProprietario().getUid());
     }
 
-    private void fetchAndDisplayWeatherData(String cidade) {
+    // Obtém e exibe os dados do clima para a cidade do imóvel
+    private void buscarEExibirDadosClima(String cidade) {
         Geocoder geocoder = new Geocoder(this);
         try {
             List<Address> addresses = geocoder.getFromLocationName(cidade, 1);
@@ -128,23 +128,39 @@ public class DetalhesImovel extends AppCompatActivity {
                 double latitude1 = Double.parseDouble(formattedLatitude);
                 double longitude1 = Double.parseDouble(formattedLongitude);
 
-                fetchWeatherData(latitude1, longitude1);
+                buscarDadosClima(latitude1, longitude1, cidade);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void fetchWeatherData(double latitude, double longitude) {
-        DadosClima weatherData = openWeatherHelper.getClimaDados(Double.toString(latitude), Double.toString(longitude));
-        if (weatherData != null) {
-            updateWeatherTextView(weatherData.getDescription());
-        } else {
-            updateWeatherTextView("Erro ao carregar API");
-        }
+    // Busca os dados do clima utilizando a API
+    private void buscarDadosClima(double latitude, double longitude, String cidade) {
+        AjudanteOpenWeather ajudanteOpenWeather = new AjudanteOpenWeather();
+        ajudanteOpenWeather.getClimaDados(this, cidade, new AjudanteOpenWeather.DadosClimaListener() {
+            @Override
+            public void onSuccess(DadosClima dadosClima) {
+                DadosClima.Main main = dadosClima.getMain();
+                DadosClima.Weather[] weather = dadosClima.getWeather();
+
+                if (main != null && weather != null && weather.length > 0) {
+                    double temperatura = main.getTemp();
+                    atualizarTextViewClima("Temperatura: " + Double.toString(temperatura) + " ºC");
+                } else {
+                    atualizarTextViewClima("Erro");
+                }
+            }
+
+            @Override
+            public void onFailure(String mensagemDeErro) {
+                atualizarTextViewClima("Falha");
+            }
+        });
     }
 
-    private void updateWeatherTextView(String descricao) {
+    // Atualiza o TextView com a descrição do clima
+    private void atualizarTextViewClima(String descricao) {
         runOnUiThread(() -> textViewClima.setText("Descrição do clima: " + descricao));
     }
 }

@@ -32,6 +32,7 @@ public class ConsultaImoveis extends AppCompatActivity implements ImovelAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_imoveis);
 
+        // Inicializar elementos de interface
         voltar = findViewById(R.id.voltar);
 
         // Configurar o RecyclerView e o Adapter
@@ -41,18 +42,20 @@ public class ConsultaImoveis extends AppCompatActivity implements ImovelAdapter.
         imovelAdapter = new ImovelAdapter(imoveisList);
         recyclerView.setAdapter(imovelAdapter);
 
+        // Configurar um ouvinte de clique para o botão "voltar"
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Voltar para a atividade principal
                 Intent intent = new Intent(ConsultaImoveis.this, Principal.class);
                 startActivity(intent);
             }
         });
 
-        // Configurar o ouvinte de cliques no adapter
+        // Configurar um ouvinte de clique para o Adapter
         imovelAdapter.setOnImovelClickListener(this);
 
-        // Adicionar um listener para recuperar os dados
+        // Adicionar um ouvinte para recuperar os dados do Firebase
         imoveisRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -63,6 +66,7 @@ public class ConsultaImoveis extends AppCompatActivity implements ImovelAdapter.
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Imovel imovel = snapshot.getValue(Imovel.class);
                     if (imovel != null) {
+                        // Adicionar o imóvel à lista
                         imoveisList.add(imovel);
                     }
                 }
@@ -84,7 +88,7 @@ public class ConsultaImoveis extends AppCompatActivity implements ImovelAdapter.
     // Método da interface de clique que será chamado quando um item for clicado
     @Override
     public void onImovelClick(Imovel imovel) {
-        // Criar um Intent para abrir uma nova atividade ou fazer outra ação desejada
+        // Criar um Intent para abrir a atividade de Detalhes do Imóvel
         Intent intent = new Intent(ConsultaImoveis.this, DetalhesImovel.class);
         // Passar informações extras, se necessário
         intent.putExtra("imovel_id", imovel.getIdImovel());

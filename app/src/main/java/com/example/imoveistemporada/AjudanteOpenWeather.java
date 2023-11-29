@@ -1,43 +1,47 @@
 package com.example.imoveistemporada;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import android.content.Context;
+
+import com.google.gson.Gson;
+
+import cz.msebera.android.httpclient.Header;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class AjudanteOpenWeather {
-
-    private static final String BASE_URL = "https://api.openweathermap.org/data/3.0/";
+    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather";
     private static final String API_KEY = "2f37b15834260fcd56695155ec5156e2";
+    private final AsyncHttpClient cliente = new AsyncHttpClient();
 
-    private final ClimaApiService weatherService;
-
-    public AjudanteOpenWeather() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        weatherService = retrofit.create(ClimaApiService.class);
+    public interface DadosClimaListener {
+        void onSuccess(DadosClima dadosClima);
+        void onFailure(String mensagemDeErro);
     }
 
-    public DadosClima getClimaDados(String latitude, String longitude) {
-        String excludePart = "current,minutely,hourly";
+    public void getClimaDados(Context contexto, String localizacao, DadosClimaListener listener) {
+        RequestParams parametros = new RequestParams();
+        parametros.put("q", localizacao);
+        parametros.put("appid", API_KEY);
+        parametros.put("units", "metric");
 
-        try {
-            Call<DadosClima> call = weatherService.getOneCallInfo(latitude, longitude, excludePart, API_KEY);
-            Response<DadosClima> response = call.execute();
-
-            if (response.isSuccessful()) {
-                return response.body();
-            } else {
-                // Handle erro na resposta, por exemplo, log ou lançar uma exceção
-                return null;
+        cliente.get(contexto, BASE_URL, parametros, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String resposta = new String(responseBody);
+                    Gson gson = new Gson();
+                    DadosClima dadosClima = gson.fromJson(resposta, DadosClima.class);
+                    listener.onSuccess(dadosClima);
+                } catch (Exception e) {
+                    listener.onFailure("Erro ao processar os dados do clima.");
+                }
             }
-        } catch (Exception e) {
-            // Handle exceção durante a chamada, por exemplo, log ou lançar uma exceção
-            return null;
-        }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFailure("Erro na requisição: " + error.getMessage());
+            }
+        });
     }
 }

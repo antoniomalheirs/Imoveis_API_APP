@@ -20,7 +20,6 @@ class CepResponse {
     }
 }
 
-
 class Usuario
 {
     private String uid;  // UID único do usuário

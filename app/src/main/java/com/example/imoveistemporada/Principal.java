@@ -22,14 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Principal extends AppCompatActivity {
-    private Button gereimoveis, consultaimoveis;
+    private Button botaoCadastrarImoveis, botaoConsultarImoveis;
     private ViewPager2 viewPager;
     private ImovelAdapterCarrossel imovelAdapter;
-    private List<Imovel> imoveisList;
-    private DatabaseReference imoveisRef = FirebaseDatabase.getInstance().getReference("Imoveis");
-    private Handler autoScrollHandler = new Handler(Looper.getMainLooper());
-    private final long AUTO_SCROLL_DELAY = 3000; // Delay em milissegundos
-    private boolean userInteracted = false;
+    private List<Imovel> listaDeImoveis;
+    private DatabaseReference referenciaImoveis = FirebaseDatabase.getInstance().getReference("Imoveis");
+    private Handler manipuladorAutoScroll = new Handler(Looper.getMainLooper());
+    private final long DELAY_AUTO_SCROLL = 3000; // Delay em milissegundos
+    private boolean usuarioInteragiu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
 
         viewPager = findViewById(R.id.viewPager);
-        imoveisList = new ArrayList<>();
-        imovelAdapter = new ImovelAdapterCarrossel(imoveisList);
+        listaDeImoveis = new ArrayList<>();
+        imovelAdapter = new ImovelAdapterCarrossel(listaDeImoveis);
         viewPager.setAdapter(imovelAdapter);
 
         // Adiciona um OnPageChangeListener para detectar interação do usuário
@@ -47,21 +47,21 @@ public class Principal extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
                 // Verifica se o usuário interagiu
-                userInteracted = state == ViewPager2.SCROLL_STATE_DRAGGING;
+                usuarioInteragiu = state == ViewPager2.SCROLL_STATE_DRAGGING;
             }
         });
 
         // Inicia a rotação automática
-        startAutoScroll();
+        iniciarAutoScroll();
 
-        imoveisRef.addValueEventListener(new ValueEventListener() {
+        referenciaImoveis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                imoveisList.clear();
+                listaDeImoveis.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Imovel imovel = snapshot.getValue(Imovel.class);
                     if (imovel != null) {
-                        imoveisList.add(imovel);
+                        listaDeImoveis.add(imovel);
                     }
                 }
                 imovelAdapter.notifyDataSetChanged();
@@ -69,15 +69,15 @@ public class Principal extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error
-                showToast("Erro ao ler dados do Firebase");
+                // Trata erro
+                exibirToast("Erro ao ler dados do Firebase");
             }
         });
 
-        gereimoveis = findViewById(R.id.Abririmoveis);
-        consultaimoveis = findViewById(R.id.consultaimoveis);
+        botaoCadastrarImoveis = findViewById(R.id.Abririmoveis);
+        botaoConsultarImoveis = findViewById(R.id.consultaimoveis);
 
-        gereimoveis.setOnClickListener(new View.OnClickListener() {
+        botaoCadastrarImoveis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Principal.this, CadastroImovel.class);
@@ -85,7 +85,7 @@ public class Principal extends AppCompatActivity {
             }
         });
 
-        consultaimoveis.setOnClickListener(new View.OnClickListener() {
+        botaoConsultarImoveis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Principal.this, ConsultaImoveis.class);
@@ -94,23 +94,23 @@ public class Principal extends AppCompatActivity {
         });
     }
 
-    private void showToast(String message) {
-        Toast.makeText(Principal.this, message, Toast.LENGTH_SHORT).show();
+    private void exibirToast(String mensagem) {
+        Toast.makeText(Principal.this, mensagem, Toast.LENGTH_SHORT).show();
     }
 
-    private void startAutoScroll() {
-        autoScrollHandler.postDelayed(new Runnable() {
+    private void iniciarAutoScroll() {
+        manipuladorAutoScroll.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!userInteracted) {
+                if (!usuarioInteragiu) {
                     // Se o usuário não interagiu, avance para o próximo item
-                    int currentItem = viewPager.getCurrentItem();
-                    int nextItem = (currentItem + 1) % imoveisList.size();
-                    viewPager.setCurrentItem(nextItem);
+                    int itemAtual = viewPager.getCurrentItem();
+                    int proximoItem = (itemAtual + 1) % listaDeImoveis.size();
+                    viewPager.setCurrentItem(proximoItem);
                 }
                 // Continue o auto-scroll
-                startAutoScroll();
+                iniciarAutoScroll();
             }
-        }, AUTO_SCROLL_DELAY);
+        }, DELAY_AUTO_SCROLL);
     }
 }
