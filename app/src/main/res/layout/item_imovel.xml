@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewIdImovel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID do Imóvel"
+        android:textColor="#8BC34A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewNomeProprietario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome do Proprietário"
+        android:textColor="#9C27B0"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewContato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contato"
+        android:textColor="#8BC34A"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/textViewValorDiaria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor Diária"
+        android:textColor="#9C27B0"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewCep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CEP -- "
+        android:textColor="#8BC34A"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/textViewdadosComplementaresEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descrição"
+        android:textColor="#9C27B0"
+        android:textSize="16sp" />
+    <!-- Adicione outros elementos conforme necessário para outros atributos do Imovel -->
+
+</LinearLayout>

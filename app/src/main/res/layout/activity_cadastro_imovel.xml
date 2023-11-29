@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#8BC34A"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextNomeProprietario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="210dp"
+        android:backgroundTint="#8BC34A"
+        android:hint="Nome do Proprietário"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTelefoneContato"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#8BC34A"
+        android:hint="Telefone de Contato"
+        android:inputType="phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextValorDiaria" />
+
+    <EditText
+        android:id="@+id/editTextCep"
+        android:layout_width="231dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#8BC34A"
+        android:hint="CEP"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTelefoneContato" />
+
+    <EditText
+        android:id="@+id/editTextDadosComplementaresEndereco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#8BC34A"
+        android:hint="Dados Complementares do Endereço"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCep" />
+
+    <EditText
+        android:id="@+id/editTextValorDiaria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#8BC34A"
+        android:hint="Valor da Diária"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNomeProprietario" />
+
+    <Button
+        android:id="@+id/btnCadastrarImovel"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Cadastrar Imóvel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDadosComplementaresEndereco" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="266dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:text="Adicionar novo Anú"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:textColor="#8BC34A"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="207dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:text="ncio de Imóvel"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="#9C27B0"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="337dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="100dp"
+        android:text="Preencha todos os campos com informações reais e precisas, não so                                                "
+        android:textAlignment="textStart"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="336dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="100dp"
+        android:text="                              mos responsáveis por eventuais danos a propriedade."
+        android:textAlignment="textStart"
+        android:textColor="#8BC34A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:text="Proprietário"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNomeProprietario"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="3dp"
+        android:text="Contato"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTelefoneContato"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextValorDiaria" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="3dp"
+        android:text="Diária"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toTopOf="@+id/editTextValorDiaria"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNomeProprietario" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="3dp"
+        android:text="Cidade"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toTopOf="@+id/editTextCep"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTelefoneContato" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="3dp"
+        android:text="Complemento"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDadosComplementaresEndereco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCep" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#9C27B0"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDadosComplementaresEndereco" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
