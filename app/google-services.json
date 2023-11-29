@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "713179724119",
+    "firebase_url": "https://imoveis-hub-default-rtdb.firebaseio.com",
+    "project_id": "imoveis-hub",
+    "storage_bucket": "imoveis-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713179724119:android:d562ed146d53ed954f6612",
+        "android_client_info": {
+          "package_name": "com.example.imoveistemporada"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7ncSiNR-vX1muiEzJ4bvCXZ81cdO37OQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
