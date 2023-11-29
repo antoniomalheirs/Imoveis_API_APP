@@ -46,10 +46,26 @@
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/textViewdadosComplementaresEndereco"
+        android:id="@+id/textViewCidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Descrição"
+        android:text="Cidade"
+        android:textColor="#9C27B0"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewPropemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail proprietário"
+        android:textColor="#8BC34A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewUid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UID"
         android:textColor="#9C27B0"
         android:textSize="16sp" />
     <!-- Adicione outros elementos conforme necessário para outros atributos do Imovel -->

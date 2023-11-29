@@ -33,8 +33,8 @@
 
     <EditText
         android:id="@+id/editTextCep"
-        android:layout_width="231dp"
-        android:layout_height="40dp"
+        android:layout_width="193dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:layout_marginTop="25dp"
         android:backgroundTint="#8BC34A"
@@ -44,13 +44,15 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTelefoneContato" />
 
     <EditText
-        android:id="@+id/editTextDadosComplementaresEndereco"
-        android:layout_width="0dp"
+        android:id="@+id/editTextCidade"
+        android:layout_width="193dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:layout_marginTop="25dp"
         android:backgroundTint="#8BC34A"
-        android:hint="Dados Complementares do Endereço"
+        android:clickable="false"
+        android:enabled="false"
+        android:hint="Cidade"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCep" />
@@ -76,19 +78,18 @@
         android:backgroundTint="#8BC34A"
         android:text="Cadastrar Imóvel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDadosComplementaresEndereco" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCidade" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="266dp"
         android:layout_height="39dp"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="30dp"
         android:text="Adicionar novo Anú"
         android:textAlignment="textEnd"
         android:textAllCaps="false"
         android:textColor="#8BC34A"
-        android:textSize="30sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/textView10"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,12 +100,11 @@
         android:layout_width="207dp"
         android:layout_height="38dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="5dp"
         android:text="ncio de Imóvel"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="#9C27B0"
-        android:textSize="30sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView8"
@@ -181,7 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
         android:layout_marginTop="3dp"
-        android:text="Cidade"
+        android:text="CEP"
         android:textColor="#9C27B0"
         app:layout_constraintBottom_toTopOf="@+id/editTextCep"
         app:layout_constraintStart_toStartOf="parent"
@@ -193,9 +193,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
         android:layout_marginTop="3dp"
-        android:text="Complemento"
+        android:text="Cidade"
         android:textColor="#9C27B0"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDadosComplementaresEndereco"
+        app:layout_constraintBottom_toTopOf="@+id/editTextCidade"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCep" />
 
@@ -208,6 +208,6 @@
         android:backgroundTint="#9C27B0"
         android:text="Cancelar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDadosComplementaresEndereco" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCidade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

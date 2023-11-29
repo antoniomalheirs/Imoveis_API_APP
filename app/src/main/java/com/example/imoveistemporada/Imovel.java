@@ -1,13 +1,71 @@
 package com.example.imoveistemporada;
 
+import com.google.gson.annotations.SerializedName;
+
+class CepResponse {
+    @SerializedName("cep")
+    private String cep;
+
+    @SerializedName("localidade")
+    private String cidade;
+
+    // Adicione outros campos, se necessário
+
+    public String getCep() {
+        return cep;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+}
+
+
+class Usuario
+{
+    private String uid;  // UID único do usuário
+    private String email;
+
+    // Construtores, getters e setters
+
+    public Usuario(String uid, String email)
+    {
+        this.uid = uid;
+        this.email = email;
+    }
+    public Usuario()
+    {
+    }
+    public void setUid(String uid)
+    {
+        this.uid = uid;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getUid()
+    {
+        return uid;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+}
+
 public class Imovel
 {
     private String idImovel;
     private String nomeProprietario;
     private String telefoneContato;
     private String cep;
-    private String dadosComplementaresEndereco;
+    private String cidade;
     private double valorDiaria;
+    private Usuario proprietario;
 
     // Construtor
     public Imovel()
@@ -15,23 +73,22 @@ public class Imovel
 
     }
 
-    public Imovel(String nomeProprietario, String telefoneContato, String cep, String dadosComplementaresEndereco, double valorDiaria)
+    public Imovel(String nomeProprietario, String telefoneContato, String cep, String cidade, double valorDiaria)
     {
-        this.idImovel = idImovel;
         this.nomeProprietario = nomeProprietario;
         this.telefoneContato = telefoneContato;
         this.cep = cep;
-        this.dadosComplementaresEndereco = dadosComplementaresEndereco;
+        this.cidade = cidade;
         this.valorDiaria = valorDiaria;
     }
 
-    public Imovel(String idImovel,String nomeProprietario, String telefoneContato, String cep, String dadosComplementaresEndereco, double valorDiaria)
+    public Imovel(String idImovel,String nomeProprietario, String telefoneContato, String cep, String cidade, double valorDiaria)
     {
         this.idImovel = idImovel;
         this.nomeProprietario = nomeProprietario;
         this.telefoneContato = telefoneContato;
         this.cep = cep;
-        this.dadosComplementaresEndereco = dadosComplementaresEndereco;
+        this.cidade = cidade;
         this.valorDiaria = valorDiaria;
     }
 
@@ -60,40 +117,41 @@ public class Imovel
     {
         return telefoneContato;
     }
-
     public void setTelefoneContato(String telefoneContato)
     {
         this.telefoneContato = telefoneContato;
     }
-
     public String getCep()
     {
         return cep;
     }
-
     public void setCep(String cep)
     {
         this.cep = cep;
     }
-
-    public String getDadosComplementaresEndereco()
+    public String getCidade()
     {
-        return dadosComplementaresEndereco;
+        return cidade;
     }
-
-    public void setDadosComplementaresEndereco(String dadosComplementaresEndereco)
+    public void setCidade(String cidade)
     {
-        this.dadosComplementaresEndereco = dadosComplementaresEndereco;
+        this.cidade = cidade;
     }
-
     public double getValorDiaria()
     {
         return valorDiaria;
     }
-
     public void setValorDiaria(double valorDiaria)
     {
         this.valorDiaria = valorDiaria;
+    }
+    public Usuario getProprietario()
+    {
+        return proprietario;
+    }
+    public void setProprietario(Usuario proprietario)
+    {
+        this.proprietario = proprietario;
     }
 }
 

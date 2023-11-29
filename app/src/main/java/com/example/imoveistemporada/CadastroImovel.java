@@ -6,26 +6,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class CadastroImovel extends AppCompatActivity
 {
-    private EditText editTextIdImovel, editTextNomeProprietario, editTextTelefoneContato, editTextCep, editTextDadosComplementaresEndereco, editTextValorDiaria;
+    private EditText editTextNomeProprietario, editTextTelefoneContato, editTextCep, editTextCidade, editTextValorDiaria;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Imoveis");
-
     private Button btnCadastrar, btnCancelar;
+    private Usuario user;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser usuarioAtual = auth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,16 +40,32 @@ public class CadastroImovel extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_imovel);
 
+        user = new Usuario();
+        user.setUid(usuarioAtual.getUid().toString());
+        user.setEmail(usuarioAtual.getEmail().toString());
+
         // Referenciar os EditTexts do layout
         editTextNomeProprietario = findViewById(R.id.editTextNomeProprietario);
         editTextTelefoneContato = findViewById(R.id.editTextTelefoneContato);
         editTextValorDiaria = findViewById(R.id.editTextValorDiaria);
         editTextCep = findViewById(R.id.editTextCep);
-        editTextDadosComplementaresEndereco = findViewById(R.id.editTextDadosComplementaresEndereco);
+        editTextCidade = findViewById(R.id.editTextCidade);
 
         // Referenciar o botão
         btnCadastrar = findViewById(R.id.btnCadastrarImovel);
         btnCancelar = findViewById(R.id.btnCancelar);
+
+        editTextCep.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    // Quando o campo CEP perde o foco, realizar a consulta
+                    consultarCep(editTextCep.getText().toString());
+                }
+            }
+        });
 
         // Adicionar evento de clique ao botão
         btnCadastrar.setOnClickListener(new View.OnClickListener()
@@ -61,10 +84,49 @@ public class CadastroImovel extends AppCompatActivity
             {
                 Intent intent = new Intent(CadastroImovel.this, Principal.class);
                 startActivity(intent);
-
-                finish();
             }
         });
+    }
+
+    private void consultarCep(String cep)
+    {
+        // Verificar se o CEP tem 8 dígitos
+        if (cep.length() == 8)
+        {
+            // Configurar a interface Retrofit
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://viacep.com.br/ws/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            // Criar uma instância da interface de serviço
+            CepApiService cepApiService = retrofit.create(CepApiService.class);
+
+            // Fazer a chamada à API
+            Call<CepResponse> call = cepApiService.getCepInfo(cep);
+            call.enqueue(new Callback<CepResponse>()
+            {
+                @Override
+                public void onResponse(Call<CepResponse> call, Response<CepResponse> response)
+                {
+                    if (response.isSuccessful() && response.body() != null)
+                    {
+                        // Preencher o campo de cidade com a resposta da API
+                        CepResponse cepResponse = response.body();
+                        editTextCidade.setText(cepResponse.getCidade());
+                    }
+                }
+                @Override
+                public void onFailure(Call<CepResponse> call, Throwable t)
+                {
+                    editTextCidade.setText("Digite um CEP válido");
+                }
+            });
+        }
+        else
+        {
+            editTextCidade.setText("Digite um CEP válido");
+        }
     }
 
     private void cadastrarImovel()
@@ -76,9 +138,11 @@ public class CadastroImovel extends AppCompatActivity
                     editTextNomeProprietario.getText().toString(),
                     editTextTelefoneContato.getText().toString(),
                     editTextCep.getText().toString(),
-                    editTextDadosComplementaresEndereco.getText().toString(),
+                    editTextCidade.getText().toString(),
                     Double.parseDouble(editTextValorDiaria.getText().toString())
             );
+
+            imovel.setProprietario(user);
 
             // Verificar se o objeto Imovel é válido antes de salvar no banco de dados
             if (imovel != null)
@@ -123,10 +187,13 @@ public class CadastroImovel extends AppCompatActivity
     // Verificar se todos os campos estão preenchidos
     private boolean camposPreenchidos()
     {
+        String cidadeText = editTextCidade.getText().toString().trim();
+
         return  !editTextNomeProprietario.getText().toString().isEmpty() &&
                 !editTextTelefoneContato.getText().toString().isEmpty() &&
                 !editTextCep.getText().toString().isEmpty() &&
-                !editTextDadosComplementaresEndereco.getText().toString().isEmpty() &&
+                !cidadeText.isEmpty() &&
+                !cidadeText.equals("Digite um CEP válido") &&
                 !editTextValorDiaria.getText().toString().isEmpty();
     }
 }

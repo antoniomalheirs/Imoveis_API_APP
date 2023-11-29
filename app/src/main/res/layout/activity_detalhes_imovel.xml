@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".DetalhesImovel">
+
+    <TextView
+        android:id="@+id/textViewTituloDetalhes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Título do Imóvel"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewIdImovel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ID do Imóvel"
+        android:textColor="#8BC34A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloDetalhes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewNomeProprietario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nome do Proprietário"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdImovel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewContato"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Contato"
+        android:textColor="#8BC34A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeProprietario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewValorDiaria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Valor Diária"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewContato"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewCep"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="CEP -- "
+        android:textColor="#8BC34A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewValorDiaria"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewCidade"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cidade"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCep"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewPropemail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="E-mail proprietário"
+        android:textColor="#8BC34A"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCidade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewUid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="UID"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPropemail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <!-- Novos TextViews -->
+    <TextView
+        android:id="@+id/textViewClimaTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Condições Climáticas"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewClima"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Temperatura: --°C"
+        android:textColor="#FF5722"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewClimaTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="404dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Voltar"
+        android:textColor="#1E1C1C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewClima" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

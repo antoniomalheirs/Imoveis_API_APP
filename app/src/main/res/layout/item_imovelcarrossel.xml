@@ -1,0 +1,59 @@
+<!-- item_imovel_carrossel.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#80000000"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/pngegg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#80000000"
+        android:padding="4dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/textViewNomeProprietario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do Proprietário"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewValorDiaria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valor Diária"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewCep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CEP"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <!-- Adicionando o TextView para exibir o e-mail do proprietário e alinhando à direita -->
+        <TextView
+            android:id="@+id/textViewPropemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="E-mail do Proprietário"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

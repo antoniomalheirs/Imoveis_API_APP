@@ -1,9 +1,10 @@
 package com.example.imoveistemporada;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsultaImoveis extends AppCompatActivity
-{
+public class ConsultaImoveis extends AppCompatActivity implements ImovelAdapter.OnImovelClickListener {
+
+    private Button voltar;
     private RecyclerView recyclerView;
     private ImovelAdapter imovelAdapter;
     private List<Imovel> imoveisList;
@@ -26,10 +28,11 @@ public class ConsultaImoveis extends AppCompatActivity
     private DatabaseReference imoveisRef = FirebaseDatabase.getInstance().getReference("Imoveis");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_imoveis);
+
+        voltar = findViewById(R.id.voltar);
 
         // Configurar o RecyclerView e o Adapter
         recyclerView = findViewById(R.id.recyclerViewImoveis);
@@ -38,21 +41,26 @@ public class ConsultaImoveis extends AppCompatActivity
         imovelAdapter = new ImovelAdapter(imoveisList);
         recyclerView.setAdapter(imovelAdapter);
 
-        // Recuperar referência ao nó "Imoveis" no Firebase
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConsultaImoveis.this, Principal.class);
+                startActivity(intent);
+            }
+        });
 
+        // Configurar o ouvinte de cliques no adapter
+        imovelAdapter.setOnImovelClickListener(this);
 
         // Adicionar um listener para recuperar os dados
-        imoveisRef.addValueEventListener(new ValueEventListener()
-        {
+        imoveisRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Limpar a lista antes de adicionar novos dados
                 imoveisList.clear();
 
                 // Iterar sobre os dados no dataSnapshot
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Imovel imovel = snapshot.getValue(Imovel.class);
                     if (imovel != null) {
                         imoveisList.add(imovel);
@@ -64,8 +72,7 @@ public class ConsultaImoveis extends AppCompatActivity
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Lidar com erro de leitura no banco de dados
                 // Por exemplo, exibir uma mensagem de erro
                 Log.e("ConsultaImoveis", "Erro ao ler dados do Firebase", databaseError.toException());
@@ -73,5 +80,14 @@ public class ConsultaImoveis extends AppCompatActivity
             }
         });
     }
-}
 
+    // Método da interface de clique que será chamado quando um item for clicado
+    @Override
+    public void onImovelClick(Imovel imovel) {
+        // Criar um Intent para abrir uma nova atividade ou fazer outra ação desejada
+        Intent intent = new Intent(ConsultaImoveis.this, DetalhesImovel.class);
+        // Passar informações extras, se necessário
+        intent.putExtra("imovel_id", imovel.getIdImovel());
+        startActivity(intent);
+    }
+}
